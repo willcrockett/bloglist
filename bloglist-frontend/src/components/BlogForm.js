@@ -1,13 +1,21 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { useState } from 'react'
-const BlogForm = ({ addBlog }) => {
+import { useDispatch } from 'react-redux'
+import { createBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
+const BlogForm = () => {
+	const dispatch = useDispatch()
 	const initialFields = {
 		title: '',
 		author: '',
 		url: ''
 	}
 	const [fields, setFields] = useState(initialFields)
-	
+
+	const addBlog = async (blog) => {
+		dispatch(createBlog(blog))
+		dispatch(setNotification(`${blog.title} by ${blog.author} succesfully created`, 'success', 4))
+	}
 	const handleChange = (e) => {
 		const { name, value } = e.target
 		

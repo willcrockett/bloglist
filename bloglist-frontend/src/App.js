@@ -35,12 +35,6 @@ const App = () => {
   }, [])
   
  /* ------------------------------ Blog Handlers ----------------------------- */
-  const addBlog = async (blog) => {
-    const savedBlog = await blogService.create(blog)
-    savedBlog.user = user
-    //setBlogs(blogs.concat(savedBlog))
-    dispatch(setNotification(`${savedBlog.title} by ${savedBlog.author} succesfully created`, 'success', 5))
-  }
 
   const updateBlog = async (blog) => {
     try {
@@ -102,7 +96,7 @@ const App = () => {
           <button type="submit">logout</button>
         </form>	
         <Toggleable buttonLabel={'Create New Blog'} ref={blogFormRef}>
-          <BlogForm addBlog={addBlog} />
+          <BlogForm />
         </Toggleable>
         <br></br>
         {blogs.map(blog =>
