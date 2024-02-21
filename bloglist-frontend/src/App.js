@@ -7,20 +7,20 @@ import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import Toggleable from './components/Toggleable'
 import { setNotification } from './reducers/notificationReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { initializeBlogs } from './reducers/blogReducer'
 const App = () => {
   const dispatch = useDispatch()
   /* ------------------------------- State Hooks ------------------------------ */
-	const [blogs, setBlogs] = useState([])
+	// const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const blogFormRef = useRef()
   /* ------------------------------ Effect Hooks ------------------------------ */
 	useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    dispatch(initializeBlogs())
   }, [])
 
+  const blogs = useSelector(state => state.blogs)
   useEffect(() => {    
     console.log('get token effect')
     
@@ -38,7 +38,7 @@ const App = () => {
   const addBlog = async (blog) => {
     const savedBlog = await blogService.create(blog)
     savedBlog.user = user
-    setBlogs(blogs.concat(savedBlog))
+    //setBlogs(blogs.concat(savedBlog))
     dispatch(setNotification(`${savedBlog.title} by ${savedBlog.author} succesfully created`, 'success', 5))
   }
 
@@ -47,7 +47,7 @@ const App = () => {
       const savedBlog = await blogService.update(blog.id, blog)
       console.log(`update blog: ${savedBlog}`)
       
-      setBlogs(blogs.map(b => b.id !== blog.id ? b : savedBlog))
+     // setBlogs(blogs.map(b => b.id !== blog.id ? b : savedBlog))
     } catch {
       dispatch(setNotification('update error', 'error', 5))
     }
@@ -56,7 +56,7 @@ const App = () => {
   const removeBlog = async (id) => {
     try {
       await blogService.remove(id)
-      setBlogs(blogs.filter((b) => b.id !== id))
+      // setBlogs(blogs.filter((b) => b.id !== id))
     } catch {
       dispatch(setNotification('remove error', 'error', 5))
     }
@@ -92,7 +92,7 @@ const App = () => {
 	}
   /* ---------------------------- Rendering Helpers --------------------------- */
   
-  blogs.sort((b1, b2) => b2.likes - b1.likes)
+  //blogs.sort((b1, b2) => b2.likes - b1.likes)
   const renderBlogs = () => {
     return (
       <div>
