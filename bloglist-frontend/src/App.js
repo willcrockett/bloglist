@@ -6,11 +6,13 @@ import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import Toggleable from './components/Toggleable'
+import { setNotification } from './reducers/notificationReducer'
+import { useDispatch } from 'react-redux'
 const App = () => {
+  const dispatch = useDispatch()
   /* ------------------------------- State Hooks ------------------------------ */
 	const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [alert, setAlert] = useState(null)
   const blogFormRef = useRef()
   /* ------------------------------ Effect Hooks ------------------------------ */
 	useEffect(() => {
@@ -37,7 +39,7 @@ const App = () => {
     const savedBlog = await blogService.create(blog)
     savedBlog.user = user
     setBlogs(blogs.concat(savedBlog))
-    notify(`${savedBlog.title} by ${savedBlog.author} succesfully created`, 'success')
+    dispatch(setNotification(`${savedBlog.title} by ${savedBlog.author} succesfully created`, 'success', 5))
   }
 
   const updateBlog = async (blog) => {
@@ -47,7 +49,7 @@ const App = () => {
       
       setBlogs(blogs.map(b => b.id !== blog.id ? b : savedBlog))
     } catch {
-      notify('update error', 'error')
+      dispatch(setNotification('update error', 'error', 5))
     }
   }
 
@@ -56,7 +58,7 @@ const App = () => {
       await blogService.remove(id)
       setBlogs(blogs.filter((b) => b.id !== id))
     } catch {
-      notify('remove error', 'error')
+      dispatch(setNotification('remove error', 'error', 5))
     }
   }
 
@@ -73,7 +75,7 @@ const App = () => {
 			setUser(user)
     } catch (e) {
 			if (e.response.status === 401) {
-				notify('wrong username and/or password', "error")
+        dispatch(setNotification('wrong username and/or password', 'error', 5))
 			}
     }
   }
@@ -90,12 +92,6 @@ const App = () => {
 	}
   /* ---------------------------- Rendering Helpers --------------------------- */
   
-  const notify = (message, type) => {
-    setAlert({ message, type })
-    setTimeout(() => {
-      setAlert(null)
-    }, 5000)
-  }
   blogs.sort((b1, b2) => b2.likes - b1.likes)
   const renderBlogs = () => {
     return (
@@ -124,7 +120,7 @@ const App = () => {
   
   return (
     <div>
-      <Notification alert={alert}/>
+      <Notification />
       { user !== null ?
         renderBlogs() :
         <LoginForm login={login}/>
