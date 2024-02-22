@@ -36,16 +36,6 @@ const App = () => {
   
  /* ------------------------------ Blog Handlers ----------------------------- */
 
-  const updateBlog = async (blog) => {
-    try {
-      const savedBlog = await blogService.update(blog.id, blog)
-      console.log(`update blog: ${savedBlog}`)
-      
-     // setBlogs(blogs.map(b => b.id !== blog.id ? b : savedBlog))
-    } catch {
-      dispatch(setNotification('update error', 'error', 5))
-    }
-  }
 
   const removeBlog = async (id) => {
     try {
@@ -102,7 +92,6 @@ const App = () => {
         {blogs.map(blog =>
         <Blog key={blog.id} 
           blog={blog} 
-          update={updateBlog} 
           remove={removeBlog} 
           curr_username={user.username}
           />
