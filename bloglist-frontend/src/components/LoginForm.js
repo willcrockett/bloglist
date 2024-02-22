@@ -1,5 +1,8 @@
 import { useState } from 'react'
-const LoginForm = ({ login }) => {
+import { useDispatch } from 'react-redux'
+import { login } from '../reducers/userReducer'
+const LoginForm = () => {
+	const dispatch = useDispatch()
 	const initialFields = {
 		username: '',
 		password: ''
@@ -17,7 +20,7 @@ const LoginForm = ({ login }) => {
 	}
 	const handleLogin = (e) => {
 		e.preventDefault()
-		login(fields)
+		dispatch(login(fields))
 		setFields({
 			...initialFields
 		})
