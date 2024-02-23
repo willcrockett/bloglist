@@ -36,9 +36,7 @@ const App = () => {
           {user.name} logged in {' '}
           <button type="submit">logout</button>
         </form>	
-        <Toggleable buttonLabel={'Create New Blog'} ref={blogFormRef}>
-          <BlogForm />
-        </Toggleable>
+        <BlogForm blogFormRef={blogFormRef} />
         <br></br>
         {blogs.map(blog =>
         <Blog key={blog.id} 
