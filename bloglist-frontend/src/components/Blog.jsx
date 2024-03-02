@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteBlog, likeBlog } from '../reducers/blogReducer'
-const Blog = ({ blog, remove, curr_username }) => {
+const Blog = ({ blog }) => {
   const [visible, setVisible] = useState(false) 
   const dispatch = useDispatch()
 	const showWhenVisible = { display: visible ? '' : 'none'}
+  const curr_username = useSelector(({user}) => user.username)
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
