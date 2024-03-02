@@ -25,7 +25,7 @@ const App = () => {
     dispatch(initializeUsers())
   }, [])
   const match = useMatch('/users/:id')
-  const selectedUser = match ? users.find(u => u.id === Number(match.params.id)) : null 
+  const selectedUser = match ? users.find(u => u.id === String(match.params.id)) : null 
   //blogs.sort((b1, b2) => b2.likes - b1.likes)
   
   return (

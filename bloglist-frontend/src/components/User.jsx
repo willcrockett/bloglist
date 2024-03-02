@@ -1,9 +1,11 @@
+import { useParams } from "react-router-dom"
 const User = ({ user }) => {
+    const id = useParams().id
     return (
         <div>
-            <h1>user.name</h1>
-            <h2>added blogs</h2> 
-            {user.blogs.map(b => <li key={b.id}>b.title</li>)}
+            <h2>{user.name}</h2>
+            <h3>added blogs</h3> 
+            {user.blogs.map(b => <li key={b.id}>{b.title}</li>)}
         </div>
     )
 }
