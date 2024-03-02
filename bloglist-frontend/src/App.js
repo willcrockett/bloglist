@@ -46,9 +46,9 @@ const App = () => {
         </div>
         <div>
         <Routes>
-          <Route path="/" element={user !== null ? <Blogs /> : <Navigate replace to="/login" />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/users" element={user !== null ? <Users /> : <Navigate replace to="/login" />} /> 
+          <Route path="/" element={<Blogs />} />
+          <Route path="/login" element={user === null ? <LoginForm /> : <Navigate replace to="/" />} />
+          <Route path="/users" element={<Users />} /> 
         </Routes>
       </div>
      
