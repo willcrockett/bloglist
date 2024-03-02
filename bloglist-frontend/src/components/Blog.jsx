@@ -5,7 +5,7 @@ const Blog = ({ blog }) => {
   const [visible, setVisible] = useState(false) 
   const dispatch = useDispatch()
 	const showWhenVisible = { display: visible ? '' : 'none'}
-  const curr_username = useSelector(({user}) => user.username)
+  const user = useSelector(({user}) => user)
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -13,7 +13,7 @@ const Blog = ({ blog }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  const showRemoveButton = { display: curr_username === blog.user.username ? '' : 'none' }
+  const showRemoveButton = { display: user && user.username === blog.user.username ? '' : 'none' }
   const handleLike = () => {
     dispatch(likeBlog(blog.id))
   }

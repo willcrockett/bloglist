@@ -4,7 +4,7 @@ import Blog from "./Blog"
 import BlogForm from "./BlogForm"
 import Notification from "./Notification"
 import { useRef } from "react"
-const BlogList = () => { 
+const Blogs = () => { 
     const blogs= useSelector(({ blogs }) => blogs)
     const user = useSelector(({ user } ) => user)
     const dispatch = useDispatch()
@@ -15,12 +15,6 @@ const BlogList = () => {
         <h2>blogs</h2>
         <div>
           
-          <h2>blogs</h2>
-          <form onSubmit={() => dispatch(clearUser())}>
-            {user.name} logged in {' '}
-            <button type="submit">logout</button>
-          </form>	
-          <BlogForm blogFormRef={blogFormRef} />
           
           
           {blogs.map(blog =>
@@ -32,4 +26,4 @@ const BlogList = () => {
 }
 
 
-export default BlogList
+export default Blogs
