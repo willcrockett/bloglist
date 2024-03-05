@@ -5,8 +5,10 @@ import { clearUser, initUser } from './reducers/userReducer'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import Blogs from './components/Blogs'
+import Blog from './components/Blog'
 import Users from './components/Users'
 import User from './components/User'
+import Notification from './components/Notification'
 import { BrowserRouter as Router,
   Routes, Route, useMatch, Link, Navigate
 } from 'react-router-dom'
@@ -16,6 +18,7 @@ const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const users = useSelector(state => state.users)
+  const blogs = useSelector(state => state.blogs)
   /* ------------------------------- State Hooks ------------------------------ */
 	// const [blogs, setBlogs] = useState([])
   /* ------------------------------ Effect Hooks ------------------------------ */
@@ -24,16 +27,22 @@ const App = () => {
     dispatch(initUser())
     dispatch(initializeUsers())
   }, [])
-  const match = useMatch('/users/:id')
-  const selectedUser = match ? users.find(u => u.id === String(match.params.id)) : null 
+  const matchUser = useMatch('/users/:id')
+  const selectedUser = matchUser ? users.find(u => u.id === String(matchUser.params.id)) : null 
+
+  const matchBlog = useMatch('/blogs/:id')
+  const selectedBlog = matchBlog ? blogs.find(b => b.id === String(matchBlog.params.id)) : null 
   //blogs.sort((b1, b2) => b2.likes - b1.likes)
   
   return (
       <>
         <Menu /> 
+        <Notification />
+        <h2>blog app</h2>
         <div>
           <Routes>
             <Route path="/" element={<Blogs />} />
+            <Route path="/blogs/:id" element={<Blog blog={selectedBlog} />} />
             <Route path="/login" element={user === null ? <LoginForm /> : <Navigate replace to="/" /> } />
             <Route path="/users" element={<Users />} /> 
             <Route path="/users/:id" element={<User user={selectedUser} />} />

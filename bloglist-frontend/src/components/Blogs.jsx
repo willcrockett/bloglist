@@ -1,26 +1,25 @@
-import { useDispatch, useSelector } from "react-redux"
-import { clearUser } from "../reducers/userReducer"
-import Blog from "./Blog"
-import BlogForm from "./BlogForm"
+import { useSelector } from "react-redux"
+import { Link } from 'react-router-dom'
 import Notification from "./Notification"
-import { useRef } from "react"
 const Blogs = () => { 
+
+    const blogStyle = {
+      paddingTop: 10,
+      paddingLeft: 2,
+      border: 'solid',
+      borderWidth: 1,
+      marginBottom: 5
+    }
+
     const blogs= useSelector(({ blogs }) => blogs)
-    const user = useSelector(({ user } ) => user)
-    const dispatch = useDispatch()
-    const blogFormRef = useRef()
     return (
       <div>
         <Notification />
-        <h2>blogs</h2>
-        <div>
-          
-          
-          
-          {blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} /> 
-          )}
-        </div>
+        {blogs.map(blog =>
+          <div key={blog.id} style={blogStyle}>
+            <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+          </div>
+        )}
       </div>
     )
 }

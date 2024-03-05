@@ -29,7 +29,7 @@ const BlogForm = ({blogFormRef}) => {
 
 	const handleCreate = (e) => {
 		e.preventDefault()
-		addBlog(fields)
+		addBlog({...fields, comments: []})
 		setFields({...initialFields})
 	}
 
